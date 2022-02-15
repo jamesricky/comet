@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogTitle } from "@material-ui/core";
+import { Dialog, DialogActions, DialogTitle } from "@mui/material";
 import * as React from "react";
 
 import { CancelButton } from "../common/buttons/cancel/CancelButton";
