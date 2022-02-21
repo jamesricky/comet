@@ -16,7 +16,7 @@ export { StackBackButton } from "./stack/backbutton/StackBackButton";
 export { StackLink } from "./stack/StackLink";
 export { StackBackButtonClassKey } from "./stack/backbutton/StackBackButton.styles";
 export { StackBackButtonProps } from "./stack/backbutton/StackBackButton";
-export { StackBreadcrumbProps, StackBreadcrumbs } from "./stack/breadcrumbs/StackBreadcrumbs";
+export { StackBreadcrumbsProps, StackBreadcrumbs } from "./stack/breadcrumbs/StackBreadcrumbs";
 export { StackBreadcrumbsClassKey } from "./stack/breadcrumbs/StackBreadcrumbs.styles";
 export { createRelayPagingActions } from "./table/paging/createRelayPagingActions";
 export { createRestPagingActions } from "./table/paging/createRestPagingActions";
@@ -66,7 +66,7 @@ export { useFetch, createFetch, FetchProvider, FetchContext } from "./fetchProvi
 export { FileIcon } from "./fileIcons/FileIcon";
 export { Field } from "./form/Field";
 export { FieldContainerClassKey, FieldContainer, FieldContainerComponent, FieldContainerProps } from "./form/FieldContainer";
-export { FormSectionKey, FormSection, FormSectionProps } from "./form/FormSection";
+export { FormSectionClassKey, FormSection, FormSectionProps } from "./form/FormSection";
 export { FinalFormInput } from "./form/FinalFormInput";
 export { FinalFormCheckbox } from "./form/Checkbox";
 export { FinalFormRadio } from "./form/Radio";
