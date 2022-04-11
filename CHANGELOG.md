@@ -50,6 +50,15 @@ Migrate to MUI 5, following the official [MUI Migration Guide](https://mui.com/g
 
 The date-picker package has been removed.
 
+## @comet/admin-color-picker
+
+### Incompatible Changes
+
+TODO
+
+-   list changed prop
+-   mention removed classes for style-overrides
+
 # [2.1.0]
 
 ## Highlights:
