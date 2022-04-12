@@ -45,8 +45,20 @@ All notable changes to this project will be documented in this file. This projec
 
 Migrate to MUI 5, following the official [MUI Migration Guide](https://mui.com/guides/migration-v4/)
 
+-   Update the packages in your package.json
+    -   Update `@comet/admin` & `@comet/admin-*` packages to >= 3.0
+        -   If you are using `@comet/admin-date-picker`, replace it with `@comet/admin-date-time`
+    -   Update to `react` & `react-dom` >= 17.0
+    -   Update the MUI packages
+        -   `@material-ui/core` -> `@mui/material`
+        -   `@material-ui/styles` -> `@mui/styles`
+        -   `@material-ui/lab` -> `@mui/lab`
+        -   `@material-ui/icons` -> `@mui/icons-material`
+    -   Remove `styled-components` and install `@emotion/react` & `@emotion/styled`
+    -   If you were using `babel-plugin-styled-components`, replace it with `@emotion/babel-plugin`
 -   Run the [MUI Codemods](https://mui.com/guides/migration-v4/#run-codemods)
 -   Migrate the [Theme Structure](https://mui.com/guides/migration-v4/#theme-structure)
+-   If you have custom styling, using styled-component, use the `styled`, imported from "@mui/material/styles" instead
 
 ## @comet/admin-date-picker
 
