@@ -4,11 +4,10 @@ All notable changes to this project will be documented in this file. This projec
 
 # [next]
 
-## @comet/admin-theme
+## @comet/admin
 
 ### Incompatible Changes
 
--   Removed deprecated package `@comet/admin-date-picker`
 -   The minimum version of `react` and `react-dom` has been changed to 17.0
 -   Migrated from "Material-UI" v4 to "MUI" v5
     -   The default color of `MuiButton` and `MuiIconButton` was [changed](https://mui.com/guides/migration-v4/#button) from "default" to "primary", to restore the previous "default" style, set the color to "info"
@@ -17,6 +16,11 @@ All notable changes to this project will be documented in this file. This projec
 -   Renamed some types for uniform naming
     -   `StackBreadcrumbProps` -> `StackBreadcrumbsProps`
     -   `FormSectionKey` -> `FormSectionClassKey`
+
+## @comet/admin-theme
+
+### Incompatible Changes
+
 -   Updated theme to reflect the latest adaptations made in our applications. The old behavior can be restored by adding the following to the theme:
     ```js
     {
@@ -48,7 +52,8 @@ Migrate to MUI 5, following the official [MUI Migration Guide](https://mui.com/g
 
 ### Incompatible Changes
 
-The date-picker package has been removed.
+-   Removed deprecated package `@comet/admin-date-picker`
+    -   Use the new `@comet/admin-date-time` package
 
 # [2.1.0]
 
