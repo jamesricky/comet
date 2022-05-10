@@ -1,6 +1,8 @@
-import { ThemeOptions } from "@mui/material";
-import { Palette } from "@mui/material/styles/createPalette";
+import { Theme, ThemeOptions } from "@mui/material";
+import { Palette } from "@mui/material/styles";
+import { Components } from "@mui/material/styles/components";
 import { Typography } from "@mui/material/styles/createTypography";
+import { ComponentNameToClassKey, ComponentsOverrides } from "@mui/material/styles/overrides";
 import { Spacing } from "@mui/system";
 
 import { getMuiAppBar } from "./MuiAppBar";
@@ -36,37 +38,48 @@ import { getMuiToggleButton } from "./MuiToggleButton";
 import { getMuiToggleButtonGroup } from "./MuiToggleButtonGroup";
 import { getMuiTypography } from "./MuiTypography";
 
-export const getComponentsTheme = (palette: Palette, typography: Typography, spacing: Spacing): ThemeOptions["components"] => ({
-    MuiAppBar: getMuiAppBar(),
-    MuiAutocomplete: getMuiAutocomplete(spacing),
-    MuiButton: getMuiButton(palette, typography),
-    MuiButtonGroup: getMuiButtonGroup(palette),
-    MuiCardContent: getMuiCardContent(spacing),
-    MuiCheckbox: getMuiCheckbox(palette),
-    MuiDialog: getMuiDialog(spacing),
-    MuiDialogActions: getMuiDialogActions(palette),
-    MuiDialogContent: getMuiDialogContent(palette),
-    MuiDialogContentText: getMuiDialogContentText(palette),
-    MuiDialogTitle: getMuiDialogTitle(palette, typography),
-    MuiDrawer: getMuiDrawer(palette),
-    MuiFormControlLabel: getMuiFormControlLabel(),
-    MuiFormLabel: getMuiFormLabel(palette, typography, spacing),
-    MuiIconButton: getMuiIconButton(palette),
-    MuiInputAdornment: getMuiInputAdornment(),
-    MuiInputBase: getMuiInputBase(palette, spacing),
-    MuiLink: getMuiLink(palette),
-    MuiListItem: getMuiListItem(),
-    MuiPaper: getMuiPaper(palette),
-    MuiPopover: getMuiPopover(),
-    MuiRadio: getMuiRadio(palette),
-    MuiSelect: getMuiSelect(palette),
-    MuiSvgIcon: getMuiSvgIcon(palette),
-    MuiSwitch: getMuiSwitch(palette),
-    MuiTab: getMuiTab(palette, typography),
-    MuiTableCell: getMuiTableCell(palette, typography),
-    MuiTableRow: getMuiTableRow(),
-    MuiTabs: getMuiTabs(palette, spacing),
-    MuiToggleButton: getMuiToggleButton(palette),
-    MuiToggleButtonGroup: getMuiToggleButtonGroup(palette),
-    MuiTypography: getMuiTypography(),
+export type ThemeData = {
+    palette: Palette;
+    typography: Typography;
+    spacing: Spacing;
+};
+
+export type GetMuiComponentTheme<ClassesName extends keyof ComponentNameToClassKey> = (
+    styleOverrides: ComponentsOverrides<Theme>[ClassesName],
+    data: ThemeData,
+) => Components[ClassesName];
+
+export const getComponentsTheme = (components: Components, data: ThemeData): ThemeOptions["components"] => ({
+    MuiAppBar: getMuiAppBar(components.MuiAppBar?.styleOverrides, data),
+    MuiAutocomplete: getMuiAutocomplete(components.MuiAutocomplete?.styleOverrides, data),
+    MuiButton: getMuiButton(components.MuiButton?.styleOverrides, data),
+    MuiButtonGroup: getMuiButtonGroup(components.MuiButtonGroup?.styleOverrides, data),
+    MuiCardContent: getMuiCardContent(components.MuiCardContent?.styleOverrides, data),
+    MuiCheckbox: getMuiCheckbox(components.MuiCheckbox?.styleOverrides, data),
+    MuiDialog: getMuiDialog(components.MuiDialog?.styleOverrides, data),
+    MuiDialogActions: getMuiDialogActions(components.MuiDialogActions?.styleOverrides, data),
+    MuiDialogContent: getMuiDialogContent(components.MuiDialogContent?.styleOverrides, data),
+    MuiDialogContentText: getMuiDialogContentText(components.MuiDialogContentText?.styleOverrides, data),
+    MuiDialogTitle: getMuiDialogTitle(components.MuiDialogTitle?.styleOverrides, data),
+    MuiDrawer: getMuiDrawer(components.MuiDrawer?.styleOverrides, data),
+    MuiFormControlLabel: getMuiFormControlLabel(components.MuiFormControlLabel?.styleOverrides, data),
+    MuiFormLabel: getMuiFormLabel(components.MuiFormLabel?.styleOverrides, data),
+    MuiIconButton: getMuiIconButton(components.MuiIconButton?.styleOverrides, data),
+    MuiInputAdornment: getMuiInputAdornment(components.MuiInputAdornment?.styleOverrides, data),
+    MuiInputBase: getMuiInputBase(components.MuiInputBase?.styleOverrides, data),
+    MuiLink: getMuiLink(components.MuiLink?.styleOverrides, data),
+    MuiListItem: getMuiListItem(components.MuiListItem?.styleOverrides, data),
+    MuiPaper: getMuiPaper(components.MuiPaper?.styleOverrides, data),
+    MuiPopover: getMuiPopover(components.MuiPopover?.styleOverrides, data),
+    MuiRadio: getMuiRadio(components.MuiRadio?.styleOverrides, data),
+    MuiSelect: getMuiSelect(components.MuiSelect?.styleOverrides, data),
+    MuiSvgIcon: getMuiSvgIcon(components.MuiSvgIcon?.styleOverrides, data),
+    MuiSwitch: getMuiSwitch(components.MuiSwitch?.styleOverrides, data),
+    MuiTab: getMuiTab(components.MuiTab?.styleOverrides, data),
+    MuiTableCell: getMuiTableCell(components.MuiTableCell?.styleOverrides, data),
+    MuiTableRow: getMuiTableRow(components.MuiTableRow?.styleOverrides, data),
+    MuiTabs: getMuiTabs(components.MuiTabs?.styleOverrides, data),
+    MuiToggleButton: getMuiToggleButton(components.MuiToggleButton?.styleOverrides, data),
+    MuiToggleButtonGroup: getMuiToggleButtonGroup(components.MuiToggleButtonGroup?.styleOverrides, data),
+    MuiTypography: getMuiTypography(components.MuiTypography?.styleOverrides, data),
 });

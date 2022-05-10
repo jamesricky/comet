@@ -3198,6 +3198,7 @@ __metadata:
     "@mui/material": ^5.4.1
     "@mui/styles": ^5.4.1
     "@mui/system": ^5.4.1
+    "@mui/utils": ^5.4.1
     react: ^17.0
   languageName: unknown
   linkType: soft
