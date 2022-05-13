@@ -1,4 +1,4 @@
-import { InputWithPopper, InputWithPopperComponents, InputWithPopperComponentsProps, InputWithPopperProps } from "@comet/admin";
+import { ClearInputButton, InputWithPopper, InputWithPopperComponents, InputWithPopperComponentsProps, InputWithPopperProps } from "@comet/admin";
 import { Box, ComponentsOverrides, InputAdornment, InputBaseProps, Theme } from "@mui/material";
 import { WithStyles, withStyles } from "@mui/styles";
 import * as React from "react";
@@ -22,7 +22,7 @@ export interface ColorPickerPropsComponentsProps extends InputWithPopperComponen
 
 export interface ColorPickerProps extends Omit<InputWithPopperProps, "children" | "onChange" | "value" | "componentsProps" | "components"> {
     value?: string | null;
-    onChange?: (color: string | null) => void;
+    onChange?: (color: string | null | undefined) => void;
     colorFormat?: "hex" | "rgba";
     colorPalette?: string[];
     hidePicker?: boolean;
@@ -30,6 +30,8 @@ export interface ColorPickerProps extends Omit<InputWithPopperProps, "children" 
     startAdornment?: InputBaseProps["startAdornment"];
     endAdornment?: InputBaseProps["endAdornment"];
     invalidIndicatorCharacter?: string;
+    clearable?: boolean;
+    hideColorPreview?: boolean;
     components?: ColorPickerPropsComponents;
     componentsProps?: ColorPickerPropsComponentsProps;
 }
@@ -43,14 +45,17 @@ const ColorPickerPreviewColor = ({ color, ...restProps }: ColorPickerColorPrevie
 };
 
 const ColorPicker = ({
+    classes,
     value,
     colorFormat = "hex",
     hidePicker,
     colorPalette,
     onChange,
     startAdornment,
+    endAdornment,
     onBlur,
-    classes,
+    clearable,
+    hideColorPreview,
     componentsProps = {},
     components = {},
     ...rest
@@ -99,26 +104,39 @@ const ColorPicker = ({
     return (
         <InputWithPopper
             startAdornment={
-                startAdornment ? (
-                    startAdornment
-                ) : (
-                    <InputAdornment position="start">
-                        <div className={classes.preview}>
-                            {previewColor ? (
-                                previewColor.isValid() ? (
-                                    <ColorPreview
-                                        className={`${classes.previewIndicator} ${classes.previewIndicatorColor}`}
-                                        color={previewColor.toRgbString()}
-                                    />
+                <>
+                    {!hideColorPreview && (
+                        <InputAdornment position="start">
+                            <div className={classes.preview}>
+                                {previewColor ? (
+                                    previewColor.isValid() ? (
+                                        <ColorPreview
+                                            className={`${classes.previewIndicator} ${classes.previewIndicatorColor}`}
+                                            color={previewColor.toRgbString()}
+                                        />
+                                    ) : (
+                                        <InvalidPreview className={`${classes.previewIndicator} ${classes.previewIndicatorInvalid}`}>
+                                            ?
+                                        </InvalidPreview>
+                                    )
                                 ) : (
-                                    <InvalidPreview className={`${classes.previewIndicator} ${classes.previewIndicatorInvalid}`}>?</InvalidPreview>
-                                )
-                            ) : (
-                                <EmptyPreview className={`${classes.previewIndicator} ${classes.previewIndicatorEmpty}`} />
-                            )}
-                        </div>
-                    </InputAdornment>
-                )
+                                    <EmptyPreview className={`${classes.previewIndicator} ${classes.previewIndicatorEmpty}`} />
+                                )}
+                            </div>
+                        </InputAdornment>
+                    )}
+                    {startAdornment}
+                </>
+            }
+            endAdornment={
+                <>
+                    {endAdornment}
+                    {clearable && (
+                        <InputAdornment position="end">
+                            <ClearInputButton onClick={() => onChange && onChange(undefined)} />
+                        </InputAdornment>
+                    )}
+                </>
             }
             value={displayValue}
             onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
