@@ -2,9 +2,14 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 
 import { InputWithPopper, InputWithPopperProps } from "@comet/admin";
+import { ComponentsOverrides, Theme } from "@mui/material";
+import { WithStyles, withStyles } from "@mui/styles";
 import * as React from "react";
 import { DateRange as ReactDateRange, DateRangeProps as ReactDateRangeProps, Range } from "react-date-range";
 import { FormatDateOptions, useIntl } from "react-intl";
+
+import { DatePickerNavigation } from "./DatePickerNavigation";
+import { DateRangePickerClassKey, styles } from "./DateRangePicker.styles";
 
 type DateRangePickerComponentsProps = InputWithPopperProps["componentsProps"] & {
     dateRange?: Partial<Omit<ReactDateRangeProps, "onChange" | "ranges">>;
@@ -21,6 +26,9 @@ export interface DateRangePickerProps extends Omit<InputWithPopperProps, "childr
     formatDateOptions?: FormatDateOptions;
     rangeStringSeparator?: string;
     componentsProps?: DateRangePickerComponentsProps;
+    monthsToShow?: number;
+    maxDate?: Date;
+    minDate?: Date;
 }
 
 const useDateRangeTextValue = (range: DateRange | null | undefined, rangeStringSeparator: string, formatDateOptions?: FormatDateOptions): string => {
@@ -61,21 +69,48 @@ const getRangeFromValue = (value: undefined | DateRange): Range => {
     };
 };
 
-export function DateRangePicker({
+const defaultMinDate = new Date();
+defaultMinDate.setFullYear(defaultMinDate.getFullYear() - 15);
+
+const defaultMaxDate = new Date();
+defaultMaxDate.setFullYear(defaultMaxDate.getFullYear() + 15);
+
+function DateRangePicker({
+    classes,
     onChange,
     value,
     componentsProps = {},
     formatDateOptions,
-    rangeStringSeparator = " - ",
+    rangeStringSeparator = "  —  ",
+    monthsToShow = 2,
+    minDate = defaultMinDate,
+    maxDate = defaultMaxDate,
     ...inputWithPopperProps
-}: DateRangePickerProps): React.ReactElement {
+}: DateRangePickerProps & WithStyles<typeof styles>): React.ReactElement {
+    const { calendar: calendarClass, ...inputWithPopperClasses } = classes;
     const { dateRange: dateRangeProps, ...inputWithPopperComponentsProps } = componentsProps;
     const textValue = useDateRangeTextValue(value, rangeStringSeparator, formatDateOptions);
 
     return (
-        <InputWithPopper value={textValue} {...inputWithPopperProps} componentsProps={inputWithPopperComponentsProps} readOnly>
+        <InputWithPopper
+            classes={inputWithPopperClasses}
+            value={textValue}
+            {...inputWithPopperProps}
+            componentsProps={inputWithPopperComponentsProps}
+            readOnly
+        >
             {(closePopper) => (
                 <ReactDateRange
+                    className={calendarClass}
+                    minDate={minDate}
+                    maxDate={maxDate}
+                    weekStartsOn={1}
+                    direction="horizontal"
+                    monthDisplayFormat="MMMM yyyy"
+                    months={monthsToShow}
+                    navigatorRenderer={(focusedDate, changeShownDate) => (
+                        <DatePickerNavigation focusedDate={focusedDate} changeShownDate={changeShownDate} minDate={minDate} maxDate={maxDate} />
+                    )}
                     onRangeFocusChange={(newFocusedRange) => {
                         const rangeSelectionHasCompleted = newFocusedRange[0] === 0 && newFocusedRange[1] === 0;
                         if (rangeSelectionHasCompleted) {
@@ -99,4 +134,25 @@ export function DateRangePicker({
             )}
         </InputWithPopper>
     );
+}
+
+const DateRangePickerWithStyles = withStyles(styles, { name: "CometAdminDateRangePicker" })(DateRangePicker);
+
+export { DateRangePickerWithStyles as DateRangePicker };
+
+declare module "@mui/material/styles" {
+    interface ComponentNameToClassKey {
+        CometAdminDateRangePicker: DateRangePickerClassKey;
+    }
+
+    interface ComponentsPropsList {
+        CometAdminDateRangePicker: DateRangePickerProps;
+    }
+
+    interface Components {
+        CometAdminDateRangePicker?: {
+            defaultProps?: ComponentsPropsList["CometAdminDateRangePicker"];
+            styleOverrides?: ComponentsOverrides<Theme>["CometAdminDateRangePicker"];
+        };
+    }
 }
