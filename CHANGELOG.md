@@ -8,7 +8,8 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Changes
 
--   EditDialog now displays loading and error states of a contained form automatically via its SaveButton
+-   EditDialog now displays loading and error states of a contained form automatically via its SaveButton.
+-   StackBreadcrumbs have a new design and show an overflow menu when the items don't fit into a single line.
 
 ### Incompatible Changes
 
