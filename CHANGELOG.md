@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file. This projec
 ### Changes
 
 -   `StackBreadcrumbs` have a new design and show an overflow menu when the items don't fit into a single line.
+-   `comet.generic` messages are exposed as public API through `messages.ts` (this stops them from being translated for every application)
 
 ### Incompatible Changes
 
@@ -18,6 +19,31 @@ All notable changes to this project will be documented in this file. This projec
 
 -   close the EditDialog after submitting a contained form via ENTER click
 -   [RTE] Fix a bug were `setEditorState` was incorrectly assumed to be a React state setter function.
+
+### Migration Guide
+
+-   replace all occurrences of `<FormattedMessage id="comet.generic.XXX" />` and `intl.formatMessage({id: "comet.generic.XXX"})`
+
+    **before**
+
+    ```typescript jsx
+    <FormattedMessage id="comet.generic.globalContentScope" defaultMessage="Global Content" />;
+
+    intl.formatMessage({
+        id: "comet.generic.doYouWantToSaveYourChanges",
+        defaultMessage: "Do you want to save your changes?",
+    });
+    ```
+
+    **new**
+
+    ```typescript jsx
+    import { messages } from "@comet/admin";
+
+    <FormattedMessage {...messages.globalContentScope} />;
+
+    intl.formatMessage(messages.saveUnsavedChanges);
+    ```
 
 ## @comet/admin-theme
 
