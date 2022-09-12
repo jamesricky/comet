@@ -37,6 +37,11 @@ type LinkWidths = {
 const useLinkWidths = (breadcrumbsElement: HTMLElement | null, itemsBeforeCollapse: number): LinkWidths => {
     const [breadcrumbItemWidths, setBreadcrumbItemWidths] = React.useState<number[]>([]);
     const [overflowLinkWidth, setOverflowLinkWidth] = React.useState<number | null>(null);
+    const stackApi = useStackApi();
+
+    React.useEffect(() => {
+        setBreadcrumbItemWidths([]);
+    }, [stackApi?.breadCrumbs]);
 
     React.useEffect(() => {
         if (breadcrumbsElement) {
@@ -51,7 +56,12 @@ const useLinkWidths = (breadcrumbsElement: HTMLElement | null, itemsBeforeCollap
                 Array.from(breadcrumbListItemElements).forEach((breadcrumbsItemElement, index) => {
                     const itemWidth = getElementOuterWidth(breadcrumbsItemElement);
 
-                    if (index === itemsBeforeCollapse) {
+                    // TODO:
+                    // • Explain this: overflow-link is not rendered before re-calculating widths...
+                    // • This doesn't work when the overflowLink is visible on the initial render, before the breadcrumbs are changed
+                    //   - Change to `index === itemsBeforeCollapse && overflowLinkWidth === null && breadcrumbsLinkIsCurrentlyNotVisible`
+
+                    if (index === itemsBeforeCollapse && overflowLinkWidth === null) {
                         setOverflowLinkWidth(itemWidth);
                     } else {
                         itemWidths.push(itemWidth);
@@ -126,6 +136,7 @@ export const useNumberOfItemsToBeHidden = (
         breadcrumbItemWidths,
         maximumNumberOfHiddenBreadcrumbItems,
         itemsBeforeCollapse,
+        stackApi?.breadCrumbs,
     ]);
 
     return numberOfItemsToBeHidden;
