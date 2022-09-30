@@ -3,6 +3,7 @@ import { Components, Palette } from "@mui/material/styles";
 import { Typography } from "@mui/material/styles/createTypography";
 import { ZIndex } from "@mui/material/styles/zIndex";
 import { Spacing } from "@mui/system";
+import type {} from "@mui/x-data-grid-pro/themeAugmentation";
 
 import { getMuiAppBar } from "./MuiAppBar";
 import { getMuiAutocomplete } from "./MuiAutocomplete";
@@ -11,6 +12,7 @@ import { getMuiButtonGroup } from "./MuiButtonGroup";
 import { getMuiCardContent } from "./MuiCardContent";
 import { getMuiCheckbox } from "./MuiCheckbox";
 import { getMuiChip } from "./MuiChip";
+import { getMuiDataGrid } from "./MuiDataGrid";
 import { getMuiDialog } from "./MuiDialog";
 import { getMuiDialogActions } from "./MuiDialogActions";
 import { getMuiDialogContent } from "./MuiDialogContent";
@@ -87,4 +89,5 @@ export const getComponentsTheme = (components: Components, themeData: ThemeData)
     MuiToggleButton: getMuiToggleButton(components.MuiToggleButton, themeData),
     MuiToggleButtonGroup: getMuiToggleButtonGroup(components.MuiToggleButtonGroup, themeData),
     MuiTypography: getMuiTypography(components.MuiTypography, themeData),
+    MuiDataGrid: getMuiDataGrid(components.MuiDataGrid, themeData),
 });

@@ -13,8 +13,8 @@ import {
     useDataGridRemote,
     usePersistentColumnState,
 } from "@comet/admin";
-import { Add as AddIcon, Edit } from "@comet/admin-icons";
-import { Alert, Box, Button, IconButton } from "@mui/material";
+import { Add as AddIcon, Clear, Edit, Search } from "@comet/admin-icons";
+import { Alert, Box, Button, IconButton, InputAdornment, InputBase, InputBaseProps } from "@mui/material";
 import { DataGridPro, GridColDef, GridToolbarQuickFilter } from "@mui/x-data-grid-pro";
 import {
     GQLCreateProductMutation,
@@ -29,6 +29,25 @@ import { filter } from "graphql-anywhere";
 import gql from "graphql-tag";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
+
+interface GridBaseTextFieldProps {
+    InputProps: InputBaseProps;
+}
+
+// TODO: Move to separate file
+const GridBaseTextField = ({ InputProps, ...inputProps }: GridBaseTextFieldProps): React.ReactElement => {
+    return (
+        <InputBase
+            {...inputProps}
+            {...InputProps}
+            startAdornment={
+                <InputAdornment position="start">
+                    <Search />
+                </InputAdornment>
+            }
+        />
+    );
+};
 
 function ProductsTableToolbar() {
     return (
@@ -128,6 +147,8 @@ function ProductsTable() {
                 loading={loading}
                 components={{
                     Toolbar: ProductsTableToolbar,
+                    BaseTextField: GridBaseTextField, // TODO: Add this to theme defaultProps
+                    QuickFilterClearIcon: Clear, // TODO: Add this to theme defaultProps
                 }}
             />
         </Box>
