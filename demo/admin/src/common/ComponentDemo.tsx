@@ -1,14 +1,15 @@
 import {
+    CheckboxListField,
     Field,
-    FieldContainer,
     FinalForm,
-    FinalFormCheckbox,
     FinalFormInput,
-    FinalFormRadio,
     FinalFormSelect,
     FinalFormSwitch,
     MainContent,
+    RadioListField,
+    SelectField,
     Stack,
+    TextField,
 } from "@comet/admin";
 import { Add, FocusPointCenter, FocusPointNortheast, FocusPointNorthwest, FocusPointSoutheast, FocusPointSouthwest, Snips } from "@comet/admin-icons";
 import {
@@ -128,51 +129,52 @@ export function ComponentDemo(): React.ReactElement {
                             }}
                             initialValues={{ richText: RichTextBlock.defaultValues() }}
                         >
-                            <Field name="text" placeholder="Input" component={FinalFormInput} fullWidth />
+                            <TextField name="text" placeholder="Input" fullWidth />
 
-                            <Field name="select" fullWidth>
-                                {(props) => (
-                                    <FinalFormSelect {...props}>
-                                        <MenuItem value="Option 1">Option 1</MenuItem>
-                                        <MenuItem value="Option 2">Option 2</MenuItem>
-                                        <MenuItem value="Option 3">Option 3</MenuItem>
-                                    </FinalFormSelect>
-                                )}
-                            </Field>
+                            <SelectField
+                                name="select"
+                                fullWidth
+                                options={[
+                                    { label: "Option 1", value: "Option 1" },
+                                    { label: "Option 2", value: "Option 2" },
+                                    { label: "Option 3", value: "Option 3" },
+                                ]}
+                            />
 
-                            <Field name="text" label="Input with label" component={FinalFormInput} fullWidth />
+                            <TextField name="text" label="Input with label" fullWidth />
 
-                            <Field name="select" label="Select with label" fullWidth>
-                                {(props) => (
-                                    <FinalFormSelect {...props}>
-                                        <MenuItem value="Option 1">Option 1</MenuItem>
-                                        <MenuItem value="Option 2">Option 2</MenuItem>
-                                        <MenuItem value="Option 3">Option 3</MenuItem>
-                                    </FinalFormSelect>
-                                )}
-                            </Field>
+                            <SelectField
+                                name="select"
+                                label="Select with label"
+                                fullWidth
+                                options={[
+                                    { label: "Option 1", value: "Option 1" },
+                                    { label: "Option 2", value: "Option 2" },
+                                    { label: "Option 3", value: "Option 3" },
+                                ]}
+                            />
 
-                            <Field name="select" label="Select">
-                                {(props) => (
-                                    <FinalFormSelect {...props}>
-                                        <MenuItem value="Option 1">Option 1</MenuItem>
-                                        <MenuItem value="Option 2">Option 2</MenuItem>
-                                        <MenuItem value="Option 3">Option 3</MenuItem>
-                                    </FinalFormSelect>
-                                )}
-                            </Field>
+                            <SelectField
+                                name="select"
+                                label="Select"
+                                options={[
+                                    { label: "Option 1", value: "Option 1" },
+                                    { label: "Option 2", value: "Option 2" },
+                                    { label: "Option 3", value: "Option 3" },
+                                ]}
+                            />
 
-                            <Field name="select" label="inline">
-                                {(props) => (
-                                    <FinalFormSelect {...props}>
-                                        <MenuItem value="Option 1">Option 1</MenuItem>
-                                        <MenuItem value="Option 2">Option 2</MenuItem>
-                                        <MenuItem value="Option 3">Option 3</MenuItem>
-                                    </FinalFormSelect>
-                                )}
-                            </Field>
+                            <SelectField
+                                name="select"
+                                label="inline"
+                                options={[
+                                    { label: "Option 1", value: "Option 1" },
+                                    { label: "Option 2", value: "Option 2" },
+                                    { label: "Option 3", value: "Option 3" },
+                                ]}
+                            />
 
-                            <Field
+                            <SelectField
                                 name="select"
                                 label={
                                     <>
@@ -182,58 +184,50 @@ export function ComponentDemo(): React.ReactElement {
                                         </Typography>
                                     </>
                                 }
-                            >
-                                {(props) => (
-                                    <FinalFormSelect {...props}>
-                                        <MenuItem value="Option 1">1</MenuItem>
-                                        <MenuItem value="Option 2">2</MenuItem>
-                                        <MenuItem value="Option 3">3</MenuItem>
-                                    </FinalFormSelect>
-                                )}
-                            </Field>
+                                options={[
+                                    { label: "Option 1", value: "1" },
+                                    { label: "Option 2", value: "2" },
+                                    { label: "Option 3", value: "3" },
+                                ]}
+                            />
 
-                            <Field name="select-custom" label="Custom select" fullWidth>
-                                {(props) => (
-                                    <FinalFormSelect {...props}>
-                                        <MenuItem value="Option 1">
-                                            <CustomSelectItem icon={<Snips />} primary="Option 1" secondary="Secondary text" />
-                                        </MenuItem>
-                                        <MenuItem value="Option 2">
-                                            <CustomSelectItem icon={<Snips />} primary="Option 2" secondary="Secondary text" />
-                                        </MenuItem>
-                                        <MenuItem value="Option 3">
-                                            <CustomSelectItem icon={<Snips />} primary="Option 3" secondary="Secondary text" />
-                                        </MenuItem>
-                                    </FinalFormSelect>
-                                )}
-                            </Field>
+                            <SelectField
+                                name="select-custom"
+                                label="Custom select"
+                                fullWidth
+                                options={[
+                                    { value: "Option 1", label: <CustomSelectItem icon={<Snips />} primary="Option 1" secondary="Secondary text" /> },
+                                    { value: "Option 2", label: <CustomSelectItem icon={<Snips />} primary="Option 2" secondary="Secondary text" /> },
+                                    { value: "Option 3", label: <CustomSelectItem icon={<Snips />} primary="Option 3" secondary="Secondary text" /> },
+                                ]}
+                            />
 
                             <Field name="textArea" label="Text Area" component={FinalFormInput} multiline minRows={3} fullWidth />
 
                             <Field name="richText" label="Rich Text" component={FinalFormRichTextBlock} fullWidth />
 
-                            <FieldContainer label="Single choice">
-                                <Field name="single-choice" type="radio" value="Option 1" fullWidth>
-                                    {(props) => <FormControlLabel label="Option 1" control={<FinalFormRadio {...props} />} />}
-                                </Field>
-                                <Field name="single-choice" type="radio" value="Option 2" fullWidth>
-                                    {(props) => <FormControlLabel label="Option 2" control={<FinalFormRadio {...props} />} />}
-                                </Field>
-                                <Field name="single-choice" type="radio" value="Option 3" fullWidth>
-                                    {(props) => <FormControlLabel label="Option 3" control={<FinalFormRadio {...props} />} />}
-                                </Field>
-                            </FieldContainer>
-                            <FieldContainer label="Multiple choice">
-                                <Field name="multiple-choice-1" type="checkbox" fullWidth>
-                                    {(props) => <FormControlLabel label="Option 1" control={<FinalFormCheckbox {...props} />} />}
-                                </Field>
-                                <Field name="multiple-choice-2" type="checkbox" fullWidth>
-                                    {(props) => <FormControlLabel label="Option 2" control={<FinalFormCheckbox {...props} />} />}
-                                </Field>
-                                <Field name="multiple-choice-3" type="checkbox" fullWidth>
-                                    {(props) => <FormControlLabel label="Option 3" control={<FinalFormCheckbox {...props} />} />}
-                                </Field>
-                            </FieldContainer>
+                            <RadioListField
+                                name="single-choice"
+                                label="Single choice"
+                                variant="vertical"
+                                fullWidth
+                                options={[
+                                    { label: "Option 1", value: "Option 1" },
+                                    { label: "Option 2", value: "Option 2" },
+                                    { label: "Option 3", value: "Option 3" },
+                                ]}
+                            />
+
+                            <CheckboxListField
+                                label="Multiple choice"
+                                fullWidth
+                                variant="vertical"
+                                options={[
+                                    { label: "Option 1", value: "multiple-choice-1" },
+                                    { label: "Option 2", value: "multiple-choice-2" },
+                                    { label: "Option 3", value: "multiple-choice-3" },
+                                ]}
+                            />
 
                             <Field name="switch" label="Switch with label">
                                 {(props) => <FormControlLabel label={null} control={<FinalFormSwitch {...props} />} />}
