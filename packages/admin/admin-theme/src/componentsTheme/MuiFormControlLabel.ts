@@ -6,8 +6,6 @@ export const getMuiFormControlLabel: GetMuiComponentTheme<"MuiFormControlLabel">
     styleOverrides: mergeOverrideStyles<"MuiFormControlLabel">(component?.styleOverrides, {
         root: {
             marginLeft: -9,
-            marginTop: -7,
-            marginBottom: -7,
         },
     }),
 });

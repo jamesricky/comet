@@ -28,6 +28,7 @@ export const ClearAdornment = ({
     const { buttonBase: buttonBaseClassName, ...restClasses } = classes;
     return (
         <Grow in={hasClearableContent}>
+            {/* TODO: Create InputAdornmentButton for this */}
             <InputAdornment {...restProps} classes={restClasses}>
                 <ButtonBase className={buttonBaseClassName} tabIndex={-1} onClick={onClick}>
                     {icon}

@@ -73,6 +73,15 @@ export { FinalFormAutocomplete, FinalFormAutocompleteProps } from "./form/Autoco
 export { FinalFormCheckbox, FinalFormCheckboxProps } from "./form/Checkbox";
 export { Field, FieldProps } from "./form/Field";
 export { FieldContainer, FieldContainerClassKey, FieldContainerComponent, FieldContainerProps } from "./form/FieldContainer";
+export { CheckboxField, CheckboxFieldProps } from "./form/fields/CheckboxField";
+export { CheckboxListField, CheckboxListFieldOption, CheckboxListFieldProps } from "./form/fields/CheckboxListField";
+export { PasswordField, PasswordFieldProps } from "./form/fields/PasswordField";
+export { RadioListField, RadioListFieldOption, RadioListFieldProps } from "./form/fields/RadioListField";
+export { SearchField, SearchFieldProps } from "./form/fields/SearchField";
+export { SelectField, SelectFieldOption, SelectFieldProps } from "./form/fields/SelectField";
+export { SwitchField, SwitchFieldProps } from "./form/fields/SwitchField";
+export { TextAreaField, TextAreaFieldProps } from "./form/fields/TextAreaField";
+export { TextField, TextFieldProps } from "./form/fields/TextField";
 export { FinalFormContext, FinalFormContextProvider, FinalFormContextProviderProps, useFinalFormContext } from "./form/FinalFormContextProvider";
 export { FinalFormInput, FinalFormInputProps } from "./form/FinalFormInput";
 export { FinalFormRangeInput, FinalFormRangeInputClassKey, FinalFormRangeInputProps } from "./form/FinalFormRangeInput";
