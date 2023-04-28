@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [next]
 
+### @comet/admin
+
+#### Changes
+
+-   Change styling of FilterBar components to be more consistent with other form components.
+
+#### Breaking changes
+
+-   The classes of `FilterBarMoreFilters` have changed, which may cause custom styling of this component to break.
+
 ## 4.0.0
 
 _Mar 8, 2023_
