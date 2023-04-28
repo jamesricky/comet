@@ -142,6 +142,12 @@ export { FilterBarMoreFilters, FilterBarMoreFiltersProps } from "./table/filterb
 export { FilterBarMoveFilersClassKey } from "./table/filterbar/filterBarMoreFilters/FilterBarMoreFilters.styles";
 export { FilterBarPopoverFilter, FilterBarPopoverFilterProps } from "./table/filterbar/filterBarPopoverFilter/FilterBarPopoverFilter";
 export { FilterBarPopoverFilterClassKey } from "./table/filterbar/filterBarPopoverFilter/FilterBarPopoverFilter.styles";
+export {
+    FilterBarSelect,
+    FilterBarSelectClassKey,
+    FilterBarSelectProps,
+    FilterBarSelectPropsComponentsProps,
+} from "./table/filterbar/filterBarSelect/FilterBarSelect";
 export { TableLocalChangesToolbar } from "./table/LocalChangesToolbar";
 export { TablePagination } from "./table/Pagination";
 export { createOffsetLimitPagingAction } from "./table/paging/createOffsetLimitPagingAction";

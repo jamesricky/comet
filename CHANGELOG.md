@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file. This projec
 #### Changes
 
 -   Change styling of FilterBar components to be more consistent with other form components.
+-   Add `FilterBarSelect` component as a quick way to choose a filter without clicking "apply".
 
 #### Breaking changes
 

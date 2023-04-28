@@ -3,18 +3,44 @@ import {
     FilterBar,
     FilterBarMoreFilters,
     FilterBarPopoverFilter,
+    FilterBarSelect,
     FinalFormInput,
     FinalFormRangeInput,
     FinalFormSwitch,
+    SortDirection,
     Table,
     TableFilterFinalForm,
     useTableQueryFilter,
 } from "@comet/admin";
 import { FinalFormReactSelectStaticOptions } from "@comet/admin-react-select";
-import { Box, Divider, FormControlLabel, Typography } from "@mui/material";
+import { Box, Divider, FormControlLabel, SelectChangeEvent, Typography } from "@mui/material";
 import { storiesOf } from "@storybook/react";
 import faker from "faker";
 import * as React from "react";
+
+const sortingOptions = [
+    {
+        sortInfo: {
+            columnName: "brand",
+            direction: SortDirection.ASC,
+        },
+        label: "Brand",
+    },
+    {
+        sortInfo: {
+            columnName: "owner",
+            direction: SortDirection.ASC,
+        },
+        label: "Owner",
+    },
+    {
+        sortInfo: {
+            columnName: "price",
+            direction: SortDirection.ASC,
+        },
+        label: "Price",
+    },
+];
 
 interface ColorFilterFieldProps {
     colors: string[];
@@ -46,6 +72,10 @@ interface IFilterValues {
         firstname: string;
         lastname: string;
     };
+    sort: {
+        columnName: string;
+        direction: SortDirection;
+    };
 }
 
 interface IExampleRow {
@@ -75,6 +105,7 @@ function Story({ tableData }: StoryProps) {
             min: 50,
             max: 1000,
         },
+        sort: sortingOptions[0].sortInfo,
     });
 
     const filteredData = tableData
@@ -103,6 +134,14 @@ function Story({ tableData }: StoryProps) {
                 filterApi.current.owner.lastname === undefined ||
                 item.owner.lastname.includes(filterApi.current.owner.lastname),
         );
+
+    if (filterApi.current.sort.columnName === "brand") {
+        filteredData.sort((a, b) => (a.brand > b.brand ? 1 : -1));
+    } else if (filterApi.current.sort.columnName === "owner") {
+        filteredData.sort((a, b) => (a.owner.firstname > b.owner.firstname ? 1 : -1));
+    } else if (filterApi.current.sort.columnName === "price") {
+        filteredData.sort((a, b) => (Number(a.price) > Number(b.price) ? 1 : -1));
+    }
 
     return (
         <>
@@ -141,6 +180,22 @@ function Story({ tableData }: StoryProps) {
                             </Box>
                         </FilterBarPopoverFilter>
                     </FilterBarMoreFilters>
+                    <Field name="sort">
+                        {({ input }) => (
+                            <FilterBarSelect
+                                label="Sort"
+                                options={sortingOptions.map((sorting) => ({
+                                    value: sorting.sortInfo.columnName,
+                                    label: sorting.label,
+                                }))}
+                                value={input.value?.columnName}
+                                onChange={(e: SelectChangeEvent<string | number>) => {
+                                    const selectedSorting = sortingOptions.find((sorting) => sorting.sortInfo.columnName === e.target.value);
+                                    input.onChange(selectedSorting?.sortInfo);
+                                }}
+                            />
+                        )}
+                    </Field>
                 </FilterBar>
             </TableFilterFinalForm>
             Filters: {JSON.stringify(filterApi.current)}
