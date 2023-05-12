@@ -1,6 +1,6 @@
-import { messages } from "@comet/admin";
-import { Copy, Delete, Drag, MoreVertical, Paste, Warning } from "@comet/admin-icons";
-import { Checkbox, Divider, IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material";
+import { messages, RowActionsItem, RowActionsMenu } from "@comet/admin";
+import { Copy, Delete, Drag, Paste, Warning } from "@comet/admin-icons";
+import { Checkbox, Divider } from "@mui/material";
 import * as React from "react";
 import { DropTargetMonitor, useDrag, useDrop, XYCoord } from "react-dnd";
 import { FormattedMessage } from "react-intl";
@@ -33,7 +33,7 @@ interface BlockRowProps {
     isValidFn: () => boolean | Promise<boolean>;
     slideIn: boolean;
     hideBottomInsertBetweenButton?: boolean;
-    additionalMenuItems?: (onMenuClose: () => void) => React.ReactNode;
+    additionalMenuItems?: (onMenuClose: () => void) => React.ReactNode; // TODO: is this an incompatible change?
     additionalContent?: React.ReactNode;
 }
 
@@ -108,29 +108,16 @@ export function BlockRow(props: BlockRowProps): JSX.Element {
     const opacity = isDragging ? 0 : 1;
     drag(drop(ref));
 
-    const [menuAnchorEl, setMenuAnchorEl] = React.useState<HTMLElement>();
-
-    const handleMoreClick: React.MouseEventHandler<HTMLElement> = (event) => {
-        setMenuAnchorEl(event.currentTarget);
-    };
-
-    const handleMenuClose = () => {
-        setMenuAnchorEl(undefined);
-    };
-
     const handleCopyClick = () => {
         props.onCopyClick?.();
-        handleMenuClose();
     };
 
     const handlePasteClick = () => {
         props.onPasteClick?.();
-        handleMenuClose();
     };
 
     const handleDeleteClick = () => {
         props.onDeleteClick?.();
-        handleMenuClose();
     };
 
     // Evaluate is valid
@@ -182,10 +169,22 @@ export function BlockRow(props: BlockRowProps): JSX.Element {
                         {props.additionalContent}
                     </sc.OuterContent>
                     <sc.ButtonContainer>
-                        {props.visibilityButton}
-                        <IconButton size="small" onClick={handleMoreClick}>
-                            <MoreVertical color="action" />
-                        </IconButton>
+                        <RowActionsMenu>
+                            {props.visibilityButton}
+                            <RowActionsMenu>
+                                <RowActionsItem onClick={handleCopyClick} icon={<Copy />}>
+                                    <FormattedMessage {...messages.copy} />
+                                </RowActionsItem>
+                                <RowActionsItem onClick={handlePasteClick} icon={<Paste />}>
+                                    <FormattedMessage {...messages.paste} />
+                                </RowActionsItem>
+                                {props.additionalMenuItems?.()}
+                                <Divider />
+                                <RowActionsItem onClick={handleDeleteClick} icon={<Delete />}>
+                                    <FormattedMessage {...messages.delete} />
+                                </RowActionsItem>
+                            </RowActionsMenu>
+                        </RowActionsMenu>
                     </sc.ButtonContainer>
                 </sc.InnerBlock>
                 <sc.RowClickContainer
@@ -193,29 +192,6 @@ export function BlockRow(props: BlockRowProps): JSX.Element {
                         if (props.onContentClick) props.onContentClick();
                     }}
                 />
-
-                <Menu anchorEl={menuAnchorEl} open={Boolean(menuAnchorEl)} onClose={handleMenuClose}>
-                    <MenuItem onClick={handleCopyClick}>
-                        <ListItemIcon>
-                            <Copy />
-                        </ListItemIcon>
-                        <FormattedMessage {...messages.copy} />
-                    </MenuItem>
-                    <MenuItem onClick={handlePasteClick}>
-                        <ListItemIcon>
-                            <Paste />
-                        </ListItemIcon>
-                        <FormattedMessage {...messages.paste} />
-                    </MenuItem>
-                    {props.additionalMenuItems?.(handleMenuClose)}
-                    <Divider />
-                    <MenuItem onClick={handleDeleteClick}>
-                        <ListItemIcon>
-                            <Delete />
-                        </ListItemIcon>
-                        <FormattedMessage {...messages.delete} />
-                    </MenuItem>
-                </Menu>
             </sc.Root>
         </sc.BlockWrapper>
     );
